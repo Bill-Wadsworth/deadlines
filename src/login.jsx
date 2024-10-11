@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { auth } from "./firebase.js";
+import "./login.css";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -22,29 +23,33 @@ export function Login({}) {
   }
 
   return (
-    <div>
-      <div>
-        <label>Email Address</label>
-        <input
-          type="email"
-          className="entrybox"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <>
+      <h1> NATA </h1>
+      <h2> Not A Todo App </h2>
+      <div className="loginbox">
+        <div>
+          <input
+            type="email"
+            className="entrybox"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            className="entrybox"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="loginButtonContainer">
+          <button onClick={signIn}> LOG IN</button>
+          <button onClick={signUpUser}> SIGN UP </button>
+        </div>
       </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          className="entrybox"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button onClick={signIn}> LOG IN</button>
-      <button onClick={signUpUser}> SIGN UP </button>
-    </div>
+    </>
   );
 }
