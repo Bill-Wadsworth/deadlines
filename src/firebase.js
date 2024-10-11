@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import {
   getFirestore,
   collection,
@@ -29,33 +29,31 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 //code to deal with the user
 const auth = getAuth();
-var user = auth.currentUser;
-onAuthStateChanged(auth, (newUser) => {
-  if (newUser) {
-  }
-});
 
-const deadlinesRef = collection(db, "deadlines");
-
-const test = query(deadlinesRef);
-
-console.log(test);
+//initialize a data base object to get the values from
+const db = getFirestore(app);
 
 async function getDeadlines() {
+  const user = auth.currentUser;
+  if (!user) {
+    return;
+  }
   // Get a reference to the 'deadlines' collection
   const deadlinesRef = collection(db, "deadlines");
-
-  const q = query(deadlinesRef, where("userId", "==", 1), limit(50));
+  const q = query(
+    deadlinesRef,
+    where("userId", "==", user.uid),
+    limit(50),
+    orderBy("due", "asc"),
+  );
 
   const snapshot = await getDocs(q);
-
   snapshot.forEach((doc) => {
     console.log("${doc.id} => ", doc.data());
   });
 }
 
-export default getDeadlines;
+export { auth, getDeadlines };
