@@ -45,7 +45,7 @@ const test = query(deadlinesRef);
 
 console.log(test);
 
-async function getDeadLines() {
+async function getDeadlines() {
   // Get a reference to the 'deadlines' collection
   const deadlinesRef = collection(db, "deadlines");
 
@@ -58,4 +58,4 @@ async function getDeadLines() {
   });
 }
 
-export default getDeadLines;
+export default getDeadlines;
