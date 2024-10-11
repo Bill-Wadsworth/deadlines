@@ -37,23 +37,22 @@ const auth = getAuth();
 const db = getFirestore(app);
 
 async function getDeadlines() {
+  console.log("fetching deadlines");
   const user = auth.currentUser;
   if (!user) {
+    console.log("No User to get info for!");
     return;
   }
   // Get a reference to the 'deadlines' collection
   const deadlinesRef = collection(db, "deadlines");
   const q = query(
     deadlinesRef,
-    where("userId", "==", user.uid),
+    where("userId", "==", 1), //SWAP 1 for USERID
     limit(50),
     orderBy("due", "asc"),
   );
-
   const snapshot = await getDocs(q);
-  snapshot.forEach((doc) => {
-    console.log("${doc.id} => ", doc.data());
-  });
+  return snapshot.docs.map((doc) => doc.data());
 }
 
 export { auth, getDeadlines };
